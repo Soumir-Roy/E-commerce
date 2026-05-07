@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PulAha — Shop the Best</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Satoshi:wght@300;400;500;700;900&display=swap" rel="stylesheet"/>
+  <!-- Fallback fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- ═══ TICKER ═══ -->
+  <div class="ticker-wrap" id="ticker-wrap">
+    <div class="ticker-inner">
+      <span>🚀 Free delivery on orders above ₹999</span>
+      <span class="tsep">◆</span>
+      <span>⚡ Flash Sale — Up to 70% OFF today only</span>
+      <span class="tsep">◆</span>
+      <span>🎁 Code <strong>PULAHA15</strong> — extra 15% off</span>
+      <span class="tsep">◆</span>
+      <span>🌟 New arrivals every week — Shop Fresh</span>
+      <span class="tsep">◆</span>
+      <span>🚀 Free delivery on orders above ₹999</span>
+      <span class="tsep">◆</span>
+      <span>⚡ Flash Sale — Up to 70% OFF today only</span>
+      <span class="tsep">◆</span>
+      <span>🎁 Code <strong>PULAHA15</strong> — extra 15% off</span>
+      <span class="tsep">◆</span>
+      <span>🌟 New arrivals every week — Shop Fresh</span>
+    </div>
+  </div>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <header class="navbar" id="navbar">
+    <div class="nav-row1">
+      <div class="nav-logo" onclick="goto('home')">
+        Pul<span>Aha</span>
+      </div>
+
+      <div class="nav-searchbar">
+        <div class="nsb-cat">
+          <select id="nsb-cat-sel">
+            <option>All</option>
+            <option>Electronics</option>
+            <option>Fashion</option>
+            <option>Beauty</option>
+            <option>Home</option>
+            <option>Sports</option>
+            <option>Books</option>
+          </select>
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <input id="nsb-input" type="text" placeholder="Search for products, brands and more…" autocomplete="off"/>
+        <button class="nsb-btn" id="nsb-btn">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+      </div>
+
+      <div class="nav-actions">
+
+        <!-- Account -->
+        <div class="nact" id="nact-account">
+          <div class="nact-body">
+            <span class="nact-top" id="nact-greet">Hello, Sign In</span>
+            <span class="nact-bot">Account ▾</span>
+          </div>
+          <div class="nact-drop" id="nact-drop">
+            <div id="drop-loggedout">
+              <button class="drop-primary-btn" onclick="goto('auth')">Sign In</button>
+              <p class="drop-new-user">New customer? <a onclick="goto('auth');switchAuthTab('register')">Start here</a></p>
+              <div class="drop-hr"></div>
+            </div>
+            <div id="drop-loggedin" style="display:none">
+              <div class="drop-username" id="drop-username"></div>
+              <div class="drop-hr"></div>
+            </div>
+            <a class="drop-item" onclick="goto('orders')">📦 My Orders</a>
+            <a class="drop-item" onclick="goto('wishlist')">❤️ Wishlist</a>
+            <a class="drop-item" onclick="goto('auth')">⚙️ Settings</a>
+            <div class="drop-hr"></div>
+            <a class="drop-item drop-signout" id="drop-signout" onclick="signOut()" style="display:none">🚪 Sign Out</a>
+          </div>
+        </div>
+
+        <!-- Orders -->
+        <div class="nact" onclick="goto('orders')">
+          <div class="nact-body">
+            <span class="nact-top">Returns &</span>
+            <span class="nact-bot">Orders</span>
+          </div>
+        </div>
+
+        <!-- Wishlist -->
+        <div class="nact" onclick="goto('wishlist')">
+          <div class="nact-icon">❤️</div>
+          <div class="nact-body">
+            <span class="nact-top">My</span>
+            <span class="nact-bot">Wishlist</span>
+          </div>
+          <span class="nact-badge wl-badge" id="wl-badge">0</span>
+        </div>
+
+        <!-- Cart -->
+        <div class="cart-btn" id="cart-btn">
+          <div class="cart-btn-inner">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+            <span>Cart</span>
+            <span class="cart-count" id="cart-count">0</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Sub-nav -->
+    <nav class="sub-nav">
+      <div class="sub-nav-inner">
+        <button class="sn-btn" onclick="goto('Home')">🏠 Home</button>
+        <button class="sn-btn" onclick="catGo('Electronics')">💻 Electronics</button>
+        <button class="sn-btn" onclick="catGo('Fashion')">👗 Fashion</button>
+        <button class="sn-btn" onclick="catGo('Beauty')">💄 Beauty</button>
+        <button class="sn-btn" onclick="catGo('Home')">🏡 Home & Kitchen</button>
+        <button class="sn-btn" onclick="catGo('Sports')">⚽ Sports</button>
+        <button class="sn-btn" onclick="catGo('Books')">📚 Books</button>
+        <button class="sn-btn sn-hot" onclick="goto('products')">🔥 Today's Deals</button>
+        <button class="sn-btn" onclick="goto('products')">⭐ Best Sellers</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ═══════════════════════════════
+       PAGE: HOME
+  ═══════════════════════════════ -->
+  <main class="page active" id="page-home">
+
+    <!-- HERO CAROUSEL + SIDE STACK -->
+    <section class="hero-section">
+      <div class="hero-main">
+        <div class="hero-viewport" id="hero-viewport">
+          <div class="hero-track" id="hero-track">
+
+            <!-- Slide 1: Electronics -->
+            <div class="hslide hsl-1">
+              <div class="hsl-content">
+                <div class="hsl-eyebrow">⚡ Limited Time</div>
+                <h1>Electronics<br/><em>Super Sale</em></h1>
+                <p>Up to <strong>70% OFF</strong> on Mobiles, Laptops &amp; More</p>
+                <div class="hsl-actions">
+                  <button class="hsl-main-btn" onclick="catGo('Electronics')">Shop Now →</button>
+                  <button class="hsl-sec-btn" onclick="goto('products')">All Deals</button>
+                </div>
+                <div class="hsl-floats">
+                  <div class="hfl hfl-1"><span>📱</span> Smartphone<br/><b>₹12,999</b></div>
+                  <div class="hfl hfl-2"><span>💻</span> Laptop<br/><b>₹45,999</b></div>
+                </div>
+              </div>
+              <div class="hsl-visual">
+                <img src="https://cdn.pixabay.com/photo/2017/11/27/21/31/computer-2982270_1280.jpg" alt="Electronics" loading="eager"/>
+                <div class="hsl-badge-img">SALE<br/>70%</div>
+              </div>
+            </div>
+
+            <!-- Slide 2: Fashion -->
+            <div class="hslide hsl-2">
+              <div class="hsl-content">
+                <div class="hsl-eyebrow">🌟 New Collection</div>
+                <h1>Summer<br/><em>Fashion 2025</em></h1>
+                <p><strong>1000+</strong> new styles arriving this season</p>
+                <div class="hsl-actions">
+                  <button class="hsl-main-btn" onclick="catGo('Fashion')">Explore →</button>
+                  <button class="hsl-sec-btn" onclick="goto('products')">View All</button>
+                </div>
+                <div class="hsl-floats">
+                  <div class="hfl hfl-1"><span>👗</span> Dress<br/><b>₹1,299</b></div>
+                  <div class="hfl hfl-2"><span>👟</span> Sneakers<br/><b>₹2,499</b></div>
+                </div>
+              </div>
+              <div class="hsl-visual">
+                <img src="https://cdn.pixabay.com/photo/2016/11/22/21/57/apparel-1850804_1280.jpg" alt="Fashion" loading="eager"/>
+                <div class="hsl-badge-img">NEW<br/>IN</div>
+              </div>
+            </div>
+
+            <!-- Slide 3: Home -->
+            <div class="hslide hsl-3">
+              <div class="hsl-content">
+                <div class="hsl-eyebrow">🏠 Home Makeover</div>
+                <h1>Home &amp;<br/><em>Living Sale</em></h1>
+                <p>Transform your space — <strong>40% OFF</strong> sitewide</p>
+                <div class="hsl-actions">
+                  <button class="hsl-main-btn" onclick="catGo('Home')">Shop Home →</button>
+                  <button class="hsl-sec-btn" onclick="goto('products')">Browse</button>
+                </div>
+                <div class="hsl-floats">
+                  <div class="hfl hfl-1"><span>🛋️</span> Sofa<br/><b>₹15,999</b></div>
+                  <div class="hfl hfl-2"><span>🪴</span> Decor<br/><b>₹499</b></div>
+                </div>
+              </div>
+              <div class="hsl-visual">
+                <img src="https://cdn.pixabay.com/photo/2017/03/22/17/39/kitchen-2165756_960_720.jpg" alt="Home" loading="lazy"/>
+                <div class="hsl-badge-img">40%<br/>OFF</div>
+              </div>
+            </div>
+
+            <!-- Slide 4: Beauty -->
+            <div class="hslide hsl-4">
+              <div class="hsl-content">
+                <div class="hsl-eyebrow">💄 Glow Up</div>
+                <h1>Beauty &amp;<br/><em>Skincare Fest</em></h1>
+                <p>Premium brands at <strong>50% OFF</strong> everything</p>
+                <div class="hsl-actions">
+                  <button class="hsl-main-btn" onclick="catGo('Beauty')">Shop Beauty →</button>
+                  <button class="hsl-sec-btn" onclick="goto('products')">See All</button>
+                </div>
+                <div class="hsl-floats">
+                  <div class="hfl hfl-1"><span>✨</span> Serum<br/><b>₹899</b></div>
+                  <div class="hfl hfl-2"><span>💅</span> Kit<br/><b>₹1,199</b></div>
+                </div>
+              </div>
+              <div class="hsl-visual">
+                <img src="https://cdn.pixabay.com/photo/2020/04/02/05/19/beauty-4993472_1280.jpg" alt="Beauty" loading="lazy"/>
+                <div class="hsl-badge-img">50%<br/>OFF</div>
+              </div>
+            </div>
+
+          </div><!-- /hero-track -->
+
+          <button class="harrow h-prev" id="h-prev">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="harrow h-next" id="h-next">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+
+          <div class="hero-dots" id="hero-dots"></div>
+          <div class="hero-prog-bar"><div id="hero-prog-fill"></div></div>
+        </div><!-- /hero-viewport -->
+      </div>
+
+      <!-- Side banners -->
+      <div class="hero-side">
+        <div class="hside-card hsc-a" onclick="catGo('Sports')">
+          <img src="https://cdn.pixabay.com/photo/2017/05/25/15/08/jogging-2343558_960_720.jpg" alt="Sports"/>
+          <div class="hsc-overlay">
+            <span class="hsc-tag">HOT</span>
+            <strong>Sports Deals</strong>
+            <p>Up to 60% off</p>
+          </div>
+        </div>
+        <div class="hside-card hsc-b" onclick="catGo('Books')">
+          <img src="https://cdn.pixabay.com/photo/2015/09/05/21/51/reading-925589_960_720.jpg" alt="Books"/>
+          <div class="hsc-overlay">
+            <span class="hsc-tag">NEW</span>
+            <strong>Books Fest</strong>
+            <p>From ₹149</p>
+          </div>
+        </div>
+        <div class="hside-card hsc-c" onclick="catGo('Beauty')">
+          <img src="https://cdn.pixabay.com/photo/2017/07/10/19/42/brush-2491235_1280.jpg" alt="Beauty"/>
+          <div class="hsc-overlay">
+            <span class="hsc-tag">SALE</span>
+            <strong>Beauty Box</strong>
+            <p>50% off all</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST STRIP -->
+    <div class="trust-strip">
+      <div class="tc"><img src="https://cdn.pixabay.com/photo/2014/04/02/10/58/delivery-305528_960_720.png" alt="" onerror="this.style.display='none'"/><div><strong>Free Delivery</strong><span>On orders above ₹999</span></div></div>
+      <div class="tc"><div class="tc-icon">🔄</div><div><strong>Easy Returns</strong><span>30-day hassle free</span></div></div>
+      <div class="tc"><div class="tc-icon">🔒</div><div><strong>Secure Payment</strong><span>100% protected</span></div></div>
+      <div class="tc"><div class="tc-icon">⭐</div><div><strong>Top Rated</strong><span>4.9/5 from 2M+ users</span></div></div>
+      <div class="tc"><div class="tc-icon">🎁</div><div><strong>Gift Wrapping</strong><span>Free on all orders</span></div></div>
+    </div>
+
+    <!-- CATEGORY CAROUSEL -->
+    <section class="home-block">
+      <div class="blk-head">
+        <h2 class="blk-title">Shop by <span>Category</span></h2>
+        <button class="blk-see-all" onclick="goto('products')">View All →</button>
+      </div>
+      <div class="hscroll-wrap">
+        <button class="hscr-arr hscr-l" id="cats-prev">‹</button>
+        <div class="hscroll" id="cats-row">
+          <div class="cat-bubble" onclick="catGo('Electronics')">
+            <div class="cb-img" style="background:linear-gradient(135deg,#e3f2fd,#90caf9)">
+              <img src="https://cdn.pixabay.com/photo/2017/11/27/21/31/computer-2982270_1280.jpg" alt="Electronics"/>
+            </div>
+            <span>Electronics</span>
+          </div>
+          <div class="cat-bubble" onclick="catGo('Fashion')">
+            <div class="cb-img" style="background:linear-gradient(135deg,#fce4ec,#f48fb1)">
+              <img src="https://cdn.pixabay.com/photo/2016/11/22/21/57/apparel-1850804_1280.jpg" alt="Fashion"/>
+            </div>
+            <span>Fashion</span>
+          </div>
+          <div class="cat-bubble" onclick="catGo('Beauty')">
+            <div class="cb-img" style="background:linear-gradient(135deg,#f3e5f5,#ce93d8)">
+              <img src="https://cdn.pixabay.com/photo/2020/04/02/05/19/beauty-4993472_1280.jpg" alt="Beauty"/>
+            </div>
+            <span>Beauty</span>
+          </div>
+          <div class="cat-bubble" onclick="catGo('Home')">
+            <div class="cb-img" style="background:linear-gradient(135deg,#e8f5e9,#a5d6a7)">
+              <img src="https://cdn.pixabay.com/photo/2017/03/22/17/39/kitchen-2165756_960_720.jpg" alt="Home"/>
+            </div>
+            <span>Home</span>
+          </div>
+          <div class="cat-bubble" onclick="catGo('Sports')">
+            <div class="cb-img" style="background:linear-gradient(135deg,#fff3e0,#ffcc80)">
+              <img src="https://cdn.pixabay.com/photo/2017/05/25/15/08/jogging-2343558_960_720.jpg" alt="Sports"/>
+            </div>
+            <span>Sports</span>
+          </div>
+          <div class="cat-bubble" onclick="catGo('Books')">
+            <div class="cb-img" style="background:linear-gradient(135deg,#e0f2f1,#80cbc4)">
+              <img src="https://cdn.pixabay.com/photo/2015/09/05/21/51/reading-925589_960_720.jpg" alt="Books"/>
+            </div>
+            <span>Books</span>
+          </div>
+          <div class="cat-bubble" onclick="goto('products')">
+            <div class="cb-img" style="background:linear-gradient(135deg,#fff8e1,#ffe082)">
+              <img src="https://cdn.pixabay.com/photo/2020/12/20/12/43/man-5846922_1280.jpg" alt="Deals"/>
+            </div>
+            <span>Top Deals</span>
+          </div>
+        </div>
+        <button class="hscr-arr hscr-r" id="cats-next">›</button>
+      </div>
+    </section>
+
+    <!-- DEALS OF THE DAY -->
+    <section class="home-block deals-block">
+      <div class="blk-head">
+        <div class="blk-head-left">
+          <h2 class="blk-title">🔥 Deals of the <span>Day</span></h2>
+          <div class="countdown" id="countdown">
+            <span class="cd-txt">Ends in:</span>
+            <div class="cd-unit"><b id="cd-h">07</b><small>HR</small></div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit"><b id="cd-m">48</b><small>MIN</small></div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit"><b id="cd-s">30</b><small>SEC</small></div>
+          </div>
+        </div>
+        <button class="blk-see-all" onclick="goto('products')">All Deals →</button>
+      </div>
+      <div class="hscroll-wrap">
+        <button class="hscr-arr hscr-l" id="deals-prev">‹</button>
+        <div class="hscroll" id="deals-row"></div>
+        <button class="hscr-arr hscr-r" id="deals-next">›</button>
+      </div>
+    </section>
+
+    <!-- FEATURED -->
+    <section class="home-block">
+      <div class="blk-head">
+        <h2 class="blk-title">⭐ Featured <span>Products</span></h2>
+        <button class="blk-see-all" onclick="goto('products')">View All →</button>
+      </div>
+      <div class="hscroll-wrap">
+        <button class="hscr-arr hscr-l" id="feat-prev">‹</button>
+        <div class="hscroll" id="feat-row"></div>
+        <button class="hscr-arr hscr-r" id="feat-next">›</button>
+      </div>
+    </section>
+
+    <!-- PROMO GRID -->
+    <section class="home-block promo-section">
+      <div class="promo-grid">
+        <div class="promo-card pc-large" onclick="catGo('Electronics')">
+          <img src="https://cdn.pixabay.com/photo/2017/11/27/21/31/computer-2982270_1280.jpg" alt="Electronics"/>
+          <div class="pc-overlay">
+            <span class="pc-tag">⚡ Flash Sale</span>
+            <h3>Electronics</h3>
+            <p>Up to 70% off on top gadgets</p>
+            <button>Shop Now →</button>
+          </div>
+        </div>
+        <div class="promo-card pc-sm" onclick="catGo('Clothing')">
+          <img src="https://cdn.pixabay.com/photo/2016/11/22/21/57/apparel-1850804_1280.jpg" alt="Fashion"/>
+          <div class="pc-overlay">
+            <span class="pc-tag">🌟 New In</span>
+            <h3>Fashion</h3>
+            <p>1000+ new styles</p>
+            <button>Explore →</button>
+          </div>
+        </div>
+        <div class="promo-card pc-sm" onclick="catGo('Beauty')">
+          <img src="https://cdn.pixabay.com/photo/2020/04/02/05/19/beauty-4993472_1280.jpg" alt="Beauty"/>
+          <div class="pc-overlay">
+            <span class="pc-tag">💄 Glow Up</span>
+            <h3>Beauty</h3>
+            <p>50% off all brands</p>
+            <button>Buy →</button>
+          </div>
+        </div>
+        <div class="promo-card pc-sm" onclick="catGo('Sports')">
+          <img src="https://cdn.pixabay.com/photo/2017/05/25/15/08/jogging-2343558_960_720.jpg" alt="Sports"/>
+          <div class="pc-overlay">
+            <span class="pc-tag">💪 Fitness</span>
+            <h3>Sports</h3>
+            <p>Premium gear 60% off</p>
+            <button>Get It →</button>
+          </div>
+        </div>
+        <div class="promo-card pc-sm" onclick="catGo('Home')">
+          <img src="https://cdn.pixabay.com/photo/2017/03/22/17/39/kitchen-2165756_960_720.jpg" alt="Home"/>
+          <div class="pc-overlay">
+            <span class="pc-tag">🏠 Home</span>
+            <h3>Home & Kitchen</h3>
+            <p>40% off sitewide</p>
+            <button>Shop →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOP RATED -->
+    <section class="home-block">
+      <div class="blk-head">
+        <h2 class="blk-title">🏆 Top <span>Rated</span></h2>
+        <button class="blk-see-all" onclick="goto('products')">View All →</button>
+      </div>
+      <div class="hscroll-wrap">
+        <button class="hscr-arr hscr-l" id="top-prev">‹</button>
+        <div class="hscroll" id="top-row"></div>
+        <button class="hscr-arr hscr-r" id="top-next">›</button>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="sf-top">
+        <div class="sf-brand">
+          <div class="sf-logo">Pul<span>Aha</span></div>
+          <p>India's most loved online shopping destination. Quality products, best prices, fastest delivery.</p>
+        </div>
+        <div class="sf-links">
+          <div class="sf-col"><h4>Shop</h4><a>Electronics</a><a>Fashion</a><a>Beauty</a><a>Home</a></div>
+          <div class="sf-col"><h4>Help</h4><a>Track Order</a><a>Returns</a><a>FAQ</a><a>Contact</a></div>
+          <div class="sf-col"><h4>PulAha</h4><a>About Us</a><a>Careers</a><a>Press</a><a>Blog</a></div>
+        </div>
+      </div>
+      <div class="sf-bottom">
+        <span>© 2025 PulAha. All rights reserved.</span>
+        <div class="sf-badges"><span>🔒 SSL Secure</span><span>📱 App Available</span><span>🚚 Pan-India</span></div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ═══ PAGE: PRODUCTS ═══ -->
+  <main class="page" id="page-products">
+    <div class="prod-page-wrap">
+      <!-- Sidebar -->
+      <aside class="prod-sidebar" id="prod-sidebar">
+        <div class="psb-head">
+          <h3>Filters</h3>
+          <button class="psb-clear" onclick="clearFilters()">Clear All</button>
+        </div>
+        <div class="psb-section">
+          <h4>Category</h4>
+          <div id="psb-cats"></div>
+        </div>
+        <div class="psb-section">
+          <h4>Price Range</h4>
+          <input class="price-range-input" type="range" id="price-range" min="0" max="100000" value="100000" oninput="onPriceRange(this.value)"/>
+          <div class="prl-label">Up to ₹<span id="prl-val">1,00,000</span></div>
+        </div>
+        <div class="psb-section">
+          <h4>Customer Rating</h4>
+          <label class="psb-chk"><input type="checkbox" onchange="applyFilters()"/> ★★★★★ 5 Stars</label>
+          <label class="psb-chk"><input type="checkbox" onchange="applyFilters()"/> ★★★★☆ 4 &amp; above</label>
+          <label class="psb-chk"><input type="checkbox" onchange="applyFilters()"/> ★★★☆☆ 3 &amp; above</label>
+        </div>
+        <div class="psb-section">
+          <h4>Discount</h4>
+          <label class="psb-chk"><input type="checkbox" onchange="applyFilters()"/> 50% or more</label>
+          <label class="psb-chk"><input type="checkbox" onchange="applyFilters()"/> 30% or more</label>
+          <label class="psb-chk"><input type="checkbox" onchange="applyFilters()"/> 10% or more</label>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <div class="prod-main">
+        <div class="prod-topbar">
+          <div class="ptb-left">
+            <span class="ptb-count" id="ptb-count">All Products</span>
+            <div id="ptb-chips"></div>
+          </div>
+          <div class="ptb-right">
+            <span class="ptb-sort-lbl">Sort by:</span>
+            <select id="sort-select" onchange="applyFilters()">
+              <option value="">Relevance</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="disc">Biggest Discount</option>
+              <option value="name">Name A–Z</option>
+            </select>
+          </div>
+        </div>
+        <div class="prod-grid" id="prod-grid">
+          <div class="grid-load"><div class="spin-ring"></div><p>Loading products…</p></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══ PAGE: WISHLIST ═══ -->
+  <main class="page" id="page-wishlist">
+    <div class="inner-page">
+      <div class="ip-head">
+        <h2>❤️ My Wishlist</h2>
+        <span id="wl-count-text"></span>
+      </div>
+      <div class="prod-grid" id="wl-grid"></div>
+    </div>
+  </main>
+
+  <!-- ═══ PAGE: AUTH ═══ -->
+  <main class="page" id="page-auth">
+    <div class="auth-page">
+      <div class="auth-left">
+        <div class="auth-left-img">
+          <img src="https://cdn.pixabay.com/photo/2019/04/26/07/14/store-4156934_960_720.jpg" alt="Shopping"/>
+        </div>
+        <div class="auth-left-overlay">
+          <div class="alo-logo">Pul<span>Aha</span></div>
+          <h2>Shop smarter,<br/>live better.</h2>
+          <ul class="alo-features">
+            <li>✓ Exclusive member discounts</li>
+            <li>✓ Track orders in real-time</li>
+            <li>✓ Personalised recommendations</li>
+            <li>✓ Early access to sales</li>
+          </ul>
+        </div>
+      </div>
+      <div class="auth-right">
+        <div class="auth-card">
+          <div class="auth-card-logo">Pul<span>Aha</span></div>
+          <div class="auth-tabs">
+            <button class="atab active" id="atab-login" onclick="switchAuthTab('login')">Sign In</button>
+            <button class="atab" id="atab-register" onclick="switchAuthTab('register')">Register</button>
+            <div class="atab-ink" id="atab-ink"></div>
+          </div>
+
+          <!-- Login -->
+          <div id="auth-login" class="auth-form show-form">
+            <div class="af-greet"><h3>Welcome back!</h3><p>Sign in to your PulAha account</p></div>
+            <div class="fg">
+              <label>Email Address</label>
+              <div class="fi-wrap"><input id="li-email" type="email" class="fi" placeholder="your@email.com"/><span>✉️</span></div>
+            </div>
+            <div class="fg">
+              <label>Password</label>
+              <div class="fi-wrap"><input id="li-pw" type="password" class="fi" placeholder="••••••••"/><span>🔑</span></div>
+            </div>
+            <button class="af-btn" id="li-btn">Sign In →</button>
+            <p class="af-terms">By signing in you agree to our <a>Terms</a> &amp; <a>Privacy Policy</a></p>
+          </div>
+
+          <!-- Register -->
+          <div id="auth-register" class="auth-form">
+            <div class="af-greet"><h3>Create Account</h3><p>Join millions of happy shoppers</p></div>
+            <div class="fg">
+              <label>Full Name</label>
+              <div class="fi-wrap"><input id="ri-name" type="text" class="fi" placeholder="Your full name"/><span>👤</span></div>
+            </div>
+            <div class="fg">
+              <label>Email Address</label>
+              <div class="fi-wrap"><input id="ri-email" type="email" class="fi" placeholder="your@email.com"/><span>✉️</span></div>
+            </div>
+            <div class="fg">
+              <label>Password</label>
+              <div class="fi-wrap"><input id="ri-pw" type="password" class="fi" placeholder="Min. 6 characters"/><span>🔑</span></div>
+            </div>
+            <button class="af-btn" id="ri-btn">Create Account →</button>
+            <p class="af-terms">By registering you agree to our <a>Terms</a> &amp; <a>Privacy Policy</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ═══ PAGE: ORDERS ═══ -->
+  <main class="page" id="page-orders">
+    <div class="inner-page">
+      <div class="ip-head">
+        <h2>📦 My Orders</h2>
+      </div>
+      <div id="orders-wrap"></div>
+    </div>
+  </main>
+
+  <!-- ═══ CART DRAWER ═══ -->
+  <div class="drawer-bg" id="drawer-bg"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="cdrw-head">
+      <div class="cdrw-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        My Cart <span id="cdrw-count">(0)</span>
+      </div>
+      <button class="cdrw-close" id="cdrw-close">✕</button>
+    </div>
+    <div class="cdrw-body" id="cdrw-body"></div>
+    <div class="cdrw-foot" id="cdrw-foot"></div>
+  </aside>
+
+  <!-- ═══ QUICK VIEW MODAL ═══ -->
+  <div class="qv-bg" id="qv-bg">
+    <div class="qv-modal" id="qv-modal">
+      <button class="qv-close" id="qv-close">✕</button>
+      <div class="qv-img-pane" id="qv-img-pane"></div>
+      <div class="qv-info-pane">
+        <div class="qv-cat" id="qv-cat"></div>
+        <h2 class="qv-name" id="qv-name"></h2>
+        <div class="qv-stars">★★★★★ <span id="qv-rating-count"></span></div>
+        <div class="qv-price-row">
+          <span class="qv-price" id="qv-price"></span>
+          <span class="qv-mrp" id="qv-mrp"></span>
+          <span class="qv-disc" id="qv-disc"></span>
+        </div>
+        <p class="qv-desc" id="qv-desc"></p>
+        <div class="qv-offers">
+          <div class="qv-offer">🏦 <b>Bank Offer:</b> 10% cashback on HDFC Cards</div>
+          <div class="qv-offer">🚚 <b>Free Delivery</b> on orders above ₹999</div>
+          <div class="qv-offer">🎁 <b>Gift wrapping</b> available at checkout</div>
+        </div>
+        <div class="qv-qty-row">
+          <span class="qv-qty-lbl">Quantity</span>
+          <div class="qv-qty-ctrl">
+            <button id="qv-minus">−</button>
+            <span id="qv-qty">1</span>
+            <button id="qv-plus">+</button>
+          </div>
+        </div>
+        <div class="qv-btns">
+          <button class="qv-add-cart" id="qv-add-cart">🛒 Add to Cart</button>
+          <button class="qv-buy-now" id="qv-buy-now">⚡ Buy Now</button>
+        </div>
+        <button class="qv-wl" id="qv-wl">❤️ Save to Wishlist</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOASTS -->
+  <div class="toast-box" id="toast-box"></div>
+
+  <script src="app.js"></script>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</body>
+</html>
